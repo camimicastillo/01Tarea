@@ -22,6 +22,8 @@ x_um= xdato.to('um')
 ydato= y*u.W*(u.m**-2)*(u.nm**-1)
 y_cgs= ydato.to('erg/(s cm2 um)')
 
+
+
 #Plotear Flujo vs Longitud de onda
 plt.clf()
 plt.plot(x_um, y_cgs)
@@ -31,3 +33,12 @@ plt.ylabel('Flujo [$erg / s * cm^2 * \mu m$]')
 plt.title('Grafico de Flujo versus Longitud de onda')
 plt.savefig('Figura.png', bbox_inches='tight')
 plt.show()
+
+
+#Integracion del espectro en longitud de onda usando el metodo del trapecio
+#"sum" corresponde al valor de la integral del espectro
+sum=0
+for i in range(1696):
+    valor= ((y_cgs[i]+y_cgs[i+1])*(x_um[i+1] - x_um[i])) / 2
+    sum += valor
+print (sum)
