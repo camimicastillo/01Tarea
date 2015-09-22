@@ -36,9 +36,25 @@ plt.show()
 
 
 #Integracion del espectro en longitud de onda usando el metodo del trapecio
-#"sum" corresponde al valor de la integral del espectro
+#"sum" corresponde al valor de la integral del espectro (Constante solar)
+#y "Ls" al valor de la Luminosidad total del sol
 sum=0
 for i in range(1696):
     valor= ((y_cgs[i]+y_cgs[i+1])*(x_um[i+1] - x_um[i])) / 2
     sum += valor
 print (sum)
+
+r= 149600000*u.km  #Distancia entre el Sol y la Tierra en km
+rcm= r.to('cm')
+Ls= 4*np.pi*(rcm*rcm)*sum
+print (Ls)
+
+#Integracion de la funcion de Planck
+
+
+#Recalcular las integrales anteriores con los metodos predeterminados de python
+#Calculo integral con metodo de trapecio predeterminado
+int_trapz= np.trapz(y_cgs, x_um)
+print (int_trapz)
+
+#Calculo integral con metodo simpson
