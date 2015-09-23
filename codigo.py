@@ -134,11 +134,8 @@ plntrapz= pln_trapz * cplanck
 print ('Valor integral de Planck con metodo trapecio predeterminado')
 print (plntrapz)
 
-#Calculo de la integral del espectro con scipy.integrate.quad
-
-
-#Calculo de la integral de funcion de Planck con scipy.integrate.quad
-fu= lambda x: (x**3)/(np.exp (x) - 1)
+#Calculo de la integral de funcion de Planck con quad
+fu= lambda x: (x**3)/(np.exp(x) - 1)
 pln_quad= integrate.quad( fu , 0, np.inf)
 print ('Valor de la integral desde 0 a infinito de (x^3 / exp(x) - 1)')
 print (pln_quad)
@@ -147,3 +144,5 @@ pln_quad1= pln_quad[0]
 plnquad= pln_quad1 * cplanck
 print ('Valor de la integral de la funcion de Planck con metodo predeterminado quad')
 print (plnquad)
+
+#Calculo del tiempo de ejecucion
