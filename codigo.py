@@ -170,7 +170,7 @@ print (plnquad)
 
 m= time.time() - l
 
-#Calculo del tiempo de ejecucion
+#Tiempos de ejecucion
 print ('Tiempo de ejecucion algoritmo propio de Trapecio para Integral del Espectro Solar')
 print (b)
 print ('Tiempo de ejecucion algoritmo propio Simpson para Integral Funcion de Planck ')
