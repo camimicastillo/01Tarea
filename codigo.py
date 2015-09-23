@@ -72,6 +72,9 @@ c=time.time()
 #Simpson, pero usando una formula vista en clases que ocupa el metodo del
 #Trapecio para llegar al metodo de Simpson
 
+#Es importante recordar que primero calcularemos la integral que va de 0 a
+#infinito de  (x^3)/(exp(x) - 1)
+
 #Definir vectores x e y(x)
 xin=0.01
 xfi=3.14 / 2
@@ -114,7 +117,7 @@ area_0=xin*yin_medio
 print ('Valor de integral con metodo punto medio en x=0, debido a que es una divergencia')
 print (area_0)
 
-#Valor final de la integral
+#Valor final de la integral que va de 0 a infinito de  (x^3)/ (exp(x) - 1)
 Sfinal= S+area_0
 print ('Valor de la integral total: Simpson + Punto medio')
 print (Sfinal)
@@ -123,12 +126,12 @@ print (Sfinal)
 t= 5778 * u.K
 cplanck= ((2*np.pi*cons.h)* (((cons.k_B*t)/(cons.h))**4))/((cons.c)**2)
 planck= cplanck * Sfinal
-print ('Valor de integral de funcion de Planck: integral calculada * constantes . FLUJO DE ENERGIA ')
+print ('Valor de integral de funcion de Planck (FLUJO DE ENERGIA): integral calculada * constantes ')
 print(planck)
 
 d=time.time() - c
 
-#Conversion de la constante solar a J/m^2 * s
+#Conversion de la constante solar Ks a J/m^2 * s
 KsJ=Ks.to('J / (m2 s)')
 
 #Calcular el radio del Sol con Formula que relaciona Constante Solar, el flujo
@@ -163,11 +166,14 @@ h= time.time() - g
 #Tiempo de ejecucion quad
 l= time.time()
 #Calculo de la integral de funcion de Planck con quad
+#Primero calculamos la integral de 0 a infinito de  (x^3) / (exp(x) - 1)
 fu= lambda x: (x**3)/(np.exp(x) - 1)
 pln_quad= integrate.quad( fu , 0, np.inf)
-print ('Valor de la integral desde 0 a infinito de (x^3 / exp(x) - 1)')
+print ('Tupla que contiene el valor de la integral y el error asociado')
 print (pln_quad)
 
+#Ahora calculamos la integral de la funcion de Planck, multiplicando
+#las constantes con el valor de la integral anteriormente calculada
 pln_quad1= pln_quad[0]
 plnquad= pln_quad1 * cplanck
 print ('Valor de la integral de la funcion de Planck con metodo predeterminado quad')
