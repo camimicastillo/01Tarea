@@ -10,6 +10,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from astropy import constants as cons
 from astropy import units as u
+from scipy import integrate as integrate
 
 #Lectura del archivo que contiene el espectro del Sol
 D = np.loadtxt("sun_AM0.dat")
@@ -108,13 +109,14 @@ print (Sfinal)
 t= 5778 * u.K
 cplanck= ((2*np.pi*cons.h)* (((cons.k_B*t)/(cons.h))**4))/((cons.c)**2)
 planck= cplanck * Sfinal
-print ('Valor de P: integral calculada * constantes . FLUJO DE ENERGIA ')
+print ('Valor de integral de funcion de Planck: integral calculada * constantes . FLUJO DE ENERGIA ')
 print(planck)
 
 #Conversion de la constante solar a J/m^2 * s
 KsJ=Ks.to('J / (m2 s)')
 
-#Calcular el radio del Sol
+#Calcular el radio del Sol con Formula que relaciona Constante Solar, el flujo
+#de energia y la unidad astronomica
 rSOL= ((KsJ*(cons.au**2))/planck)**0.5
 print ('Valor del radio del Sol')
 print (rSOL)
@@ -127,6 +129,21 @@ print ('Valor integral del espectro con metodo trapecio predeterminado')
 print (esp_trapz)
 
 #Calculo de integral de funcion de Planck con metodo de trapecio predeterminado
+pln_trapz= np.trapz(y_pl, x_pl)
+plntrapz= pln_trapz * cplanck
+print ('Valor integral de Planck con metodo trapecio predeterminado')
+print (plntrapz)
+
+#Calculo de la integral del espectro con scipy.integrate.quad
 
 
-#Calculo integral con metodo Simpson predeterminado
+#Calculo de la integral de funcion de Planck con scipy.integrate.quad
+fu= lambda x: (x**3)/(np.exp (x) - 1)
+pln_quad= integrate.quad( fu , 0, np.inf)
+print ('Valor de la integral desde 0 a infinito de (x^3 / exp(x) - 1)')
+print (pln_quad)
+
+pln_quad1= pln_quad[0]
+plnquad= pln_quad1 * cplanck
+print ('Valor de la integral de la funcion de Planck con metodo predeterminado quad')
+print (plnquad)
