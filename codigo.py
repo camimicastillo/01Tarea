@@ -38,20 +38,24 @@ plt.show()
 #Integracion del espectro en longitud de onda usando el metodo del trapecio
 #"sum" corresponde al valor de la integral del espectro (Constante solar)
 #y "Ls" al valor de la Luminosidad total del sol
-sum=0
+Ks=0
 for i in range(1696):
     valor= ((y_cgs[i]+y_cgs[i+1])*(x_um[i+1] - x_um[i])) / 2
-    sum += valor
-print (sum)
+    Ks += valor
+print ('Integral del espectro del Sol: CONSTANTE SOLAR')
+print (Ks)
 
-r= 149600000*u.km  #Distancia entre el Sol y la Tierra en km
+r= cons.au #Distancia entre el Sol y la Tierra en m
 rcm= r.to('cm')
-Ls= 4*np.pi*(rcm*rcm)*sum
+Ls= 4*np.pi*(rcm*rcm)*Ks
+print ('Luminosidad total del Sol')
 print (Ls)
 
 #Integracion de la funcion de Planck
 #A partir de la ecuacion dada en la tarea, se realiza el cambio de
-#variable y= arctan(x).
+#variable y= arctan(x). Ahora calcularemos esta integral con el metodo de
+#Simpson, pero usando una formula vista en clases que ocupa el metodo del
+#Trapecio para llegar al metodo de Simpson
 
 #Definir vectores x e y(x)
 xin=0.01
@@ -65,6 +69,7 @@ Tn=0
 for j in range(elementos-1):
     ar= ((y_pl[j]+y_pl[j+1])*(x_pl[j+1] - x_pl[j])) / 2
     Tn += ar
+print('Valor integral con Trapecio con n puntos')
 print (Tn)
 
 #Definir nuevos vectores x e y(x) con el doble de elementos
@@ -79,30 +84,49 @@ T_2n=0
 for k in range(elementoss-1):
     inte= ((y_pln[k]+y_pln[k+1])*(x_pln[k+1] - x_pln[k])) / 2
     T_2n += inte
+print ('Valor integral con Trapecio 2n puntos')
 print (T_2n)
 
+#Aplicar formula vista en clases para Simpson
 S= (4*T_2n / 3) - (Tn)/3
+print ('Valor integral con metodo de Simpson (formula vista en clases que utiliza Trapecio)')
 print (S)
 
 #Usamos el metodo del punto medio para calcular la integral cuando la
 #funcion diverge, en este caso en 0
 yin_medio= (np.tan(xin/2)**3)/((np.cos(xin/2)**2)*(np.exp(np.tan(xin/2))-1))
 area_0=xin*yin_medio
+print ('Valor de integral con metodo punto medio en x=0, debido a que es una divergencia')
 print (area_0)
 
+#Valor final de la integral
 Sfinal= S+area_0
+print ('Valor de la integral total: Simpson + Punto medio')
 print (Sfinal)
 
+#Valor de la integral de la funcion de Planck: que es constantes * Integral
 t= 5778 * u.K
 cplanck= ((2*np.pi*cons.h)* (((cons.k_B*t)/(cons.h))**4))/((cons.c)**2)
 planck= cplanck * Sfinal
-
+print ('Valor de P: integral calculada * constantes . FLUJO DE ENERGIA ')
 print(planck)
+
+#Conversion de la constante solar a J/m^2 * s
+KsJ=Ks.to('J / (m2 s)')
+
+#Calcular el radio del Sol
+rSOL= ((KsJ*(cons.au**2))/planck)**0.5
+print ('Valor del radio del Sol')
+print (rSOL)
 
 
 #Recalcular las integrales anteriores con los metodos predeterminados de python
-#Calculo integral con metodo de trapecio predeterminado
-#int_trapz= np.trapz(y_cgs, x_um)
-#print (int_trapz)
+#Calculo integral del espectro con metodo de trapecio predeterminado
+esp_trapz= np.trapz(y_cgs, x_um)
+print ('Valor integral del espectro con metodo trapecio predeterminado')
+print (esp_trapz)
+
+#Calculo de integral de funcion de Planck con metodo de trapecio predeterminado
+
 
 #Calculo integral con metodo Simpson predeterminado
