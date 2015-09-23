@@ -1,8 +1,12 @@
 #! /usr/bin/env python
 
 '''
-Este es un script que integra el espectro del Sol
-e integra la funcion de Planck
+Este es un script que grafica e integra el espectro del Sol e integra
+la funcion de Planck mediante algoritos propios y luego con algoritmos
+predeterminados de Python. Luego compara los tiempos de ejecucion de estos.
+Ademas calcula la Constante Solar (integral del espectro solar), la luminosidad
+total del Sol, el flujo de energia (integral de funcion de Planck), el radio
+del Sol.
 '''
 
 
@@ -61,6 +65,7 @@ print (Ls)
 
 #Calculo del tiempo de ejecucion del Metodo de Simpson propio
 c=time.time()
+
 #Integracion de la funcion de Planck
 #A partir de la ecuacion dada en la tarea, se realiza el cambio de
 #variable y= arctan(x). Ahora calcularemos esta integral con el metodo de
