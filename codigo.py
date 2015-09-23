@@ -50,11 +50,59 @@ Ls= 4*np.pi*(rcm*rcm)*sum
 print (Ls)
 
 #Integracion de la funcion de Planck
+#A partir de la ecuacion dada en la tarea, se realiza el cambio de
+#variable y= arctan(x).
+
+#Definir vectores x e y(x)
+xin=0.01
+xfi=3.14 / 2
+x_pl= np.arange(xin, xfi, 0.01)
+y_pl= (np.tan(x_pl)**3)/((np.cos(x_pl)**2)*(np.exp(np.tan(x_pl))-1))
+elementos=len(x_pl)
+
+#Iteracion Trapecio para n puntos (n=elementos del vector x_pl)
+Tn=0
+for j in range(elementos-1):
+    ar= ((y_pl[j]+y_pl[j+1])*(x_pl[j+1] - x_pl[j])) / 2
+    Tn += ar
+print (Tn)
+
+#Definir nuevos vectores x e y(x) con el doble de elementos
+xinn=0.01
+xfin=3.14 / 2
+x_pln= np.arange(xin, xfi, 0.005)
+y_pln= (np.tan(x_pln)**3)/((np.cos(x_pln)**2)*(np.exp(np.tan(x_pln))-1))
+elementoss=len(x_pln)
+
+#Iteracion Trapecio para 2n puntos
+T_2n=0
+for k in range(elementoss-1):
+    inte= ((y_pln[k]+y_pln[k+1])*(x_pln[k+1] - x_pln[k])) / 2
+    T_2n += inte
+print (T_2n)
+
+S= (4*T_2n / 3) - (Tn)/3
+print (S)
+
+#Usamos el metodo del punto medio para calcular la integral cuando la
+#funcion diverge, en este caso en 0
+yin_medio= (np.tan(xin/2)**3)/((np.cos(xin/2)**2)*(np.exp(np.tan(xin/2))-1))
+area_0=xin*yin_medio
+print (area_0)
+
+Sfinal= S+area_0
+print (Sfinal)
+
+t= 5778 * u.K
+cplanck= ((2*np.pi*cons.h)* (((cons.k_B*t)/(cons.h))**4))/((cons.c)**2)
+planck= cplanck * Sfinal
+
+print(planck)
 
 
 #Recalcular las integrales anteriores con los metodos predeterminados de python
 #Calculo integral con metodo de trapecio predeterminado
-int_trapz= np.trapz(y_cgs, x_um)
-print (int_trapz)
+#int_trapz= np.trapz(y_cgs, x_um)
+#print (int_trapz)
 
-#Calculo integral con metodo simpson
+#Calculo integral con metodo Simpson predeterminado
